@@ -1,6 +1,6 @@
 <template>
   <div class="hy-box filter-mix">
-    <h3>欢迎使用橘猫精选后台</h3>
+    <!-- <h3>北京外卖福利社</h3> -->
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
       font-size: 2.5em;
       color:#fff;
       padding: 15px 120px;
-      background-color: #ca7944;
+      background-color: #0131ad;
       opacity: 0.8;
       margin-bottom:-300px;
     }

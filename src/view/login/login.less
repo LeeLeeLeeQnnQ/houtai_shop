@@ -27,3 +27,51 @@
         }
     }
 }
+.login-con{
+    width: 320px;
+    .ivu-card{
+        background-color: rgba(225,225,225,0.3);
+        border-radius: 15px;
+        .ivu-card-head{
+            border:none;
+            text-align: center;
+        }
+        .ivu-card-head{
+            padding: 8px;
+        }
+        .ivu-card-head p{
+            height: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .ivu-card-head span{
+            font-size: 1.5rem;
+            color: rgba(63,0,221,1);
+            height: 2rem;
+            display: inline-block;
+            line-height: 2rem;
+        }
+        .ivu-input-group-prepend{
+            display: none;
+        }
+    }
+    .ivu-card-body{
+        padding:  0  40px 16px 40px;
+    }
+    .btn-lg{
+        border-color:rgba(250,143,15,1);;
+        box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+        border-radius: 20px;
+        color: #333;
+        background: -webkit-linear-gradient(rgba(250,140,15,1),rgba(248,160,30,1)); /* Safari 5.1-6.0 */
+        background: -o-linear-gradient(rgba(250,140,15,1),rgba(248,160,30,1)); /* Opera 11.1-12.0 */ 
+        background: -moz-linear-gradient(rgba(250,140,15,1),rgba(248,160,30,1)); /* Firefox 3.6-15 */
+        background: linear-gradient(rgba(250,140,15,1),rgba(248,160,30,1)); /* 标准语法 */
+    }
+}
+.login-con .ivu-input-group > .ivu-input:last-child, .ivu-input-group-append{
+    border-bottom-left-radius:4px !important;
+    border-top-left-radius:4px !important;
+}

@@ -1,23 +1,23 @@
 <template>
-  <Form ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
+  <Form class="lg-warp" ref="loginForm" :model="form" :rules="rules" @keydown.enter.native="handleSubmit">
     <FormItem prop="username">
       <Input v-model="form.username" placeholder="请输入用户名">
         <span slot="prepend">
-          <Icon :size="16" type="ios-person"></Icon>
+          <!-- <Icon :size="16" type="ios-person"></Icon> -->
         </span>
       </Input>
     </FormItem>
     <FormItem prop="password">
       <Input type="password" v-model="form.password" placeholder="请输入密码">
         <span slot="prepend">
-          <Icon :size="14" type="md-lock"></Icon>
+          <!-- <Icon :size="14" type="md-lock"></Icon> -->
         </span>
       </Input>
     </FormItem>
     <FormItem prop="captcha">
       <Input v-model="form.captcha" placeholder="请输入验证码">
         <span slot="prepend">
-          <Icon :size="14" type="md-settings" />
+          <!-- <Icon :size="14" type="md-settings" /> -->
         </span>
       </Input>
     </FormItem>
@@ -25,7 +25,7 @@
       <img ref="captcha" style="width:100%;height:100%" :src="captcha_src" name="verify" title="看不清,点击更换验证码" @click="changeCaptcha"/>
     </FormItem>
     <FormItem>
-      <Button @click="handleSubmit" type="primary" long>登录</Button>
+      <Button class="btn-lg" @click="handleSubmit" type="primary" long>登录</Button>
     </FormItem>
   </Form>
 </template>
@@ -106,3 +106,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+  .lg-warp{
+    /*background-color: red;*/
+  }
+</style>
