@@ -12,14 +12,27 @@
     </Card>
     <!-- 申领凭证 -->
     <Modal title="充值凭证预览" v-model="showApplyImgList">
-      <div class="img-upload-list" v-for="item in applyImgList">
-        <div>
-          <img :src="item">
-          <div class="img-upload-list-cover">
-              <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
+      <Form :model="evaluateInfo" :label-width="120" inline>
+        <FormItem label="店铺名称">
+          <Input v-model="evaluateInfo.shop_name" type="textarea" :rows="2" readonly style="width: 300px"></Input>
+        </FormItem>
+        <FormItem label="实付金额">
+          <Input v-model="evaluateInfo.order_total" readonly style="width: 300px"></Input>
+        </FormItem>
+        <FormItem label="订单日期">
+          <Input v-model="evaluateInfo.order_time" readonly style="width: 300px"></Input>
+        </FormItem>
+        <FormItem label="图片凭证">
+          <div class="img-upload-list" v-for="item in applyImgList">
+            <div>
+              <img :src="item">
+              <div class="img-upload-list-cover">
+                  <Icon type="ios-eye-outline" @click.native="handleView(item)"></Icon>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </FormItem>
+      </Form>
     </Modal>
     <!-- 查看图片 -->
     <Modal title="预览图" v-model="visible">
@@ -31,7 +44,7 @@
 // 权限
 // UserOrder/index
 import Tables from '_c/tables'
-import { getSpreadUserOrderList } from '@/api/spread'
+import { getSpreadUserOrderList , searchByOrdersn} from '@/api/spread'
 export default {
   name: 'welfare_list',
   components: {
@@ -94,20 +107,38 @@ export default {
           key: 'handle',
           button: [
             (h, params, vm) => {
-              return h('Button', {
-                style:{
-                  margin:"0"
-                },
-                props: {
-                  type: 'info',
-                  size: 'small'
-                },
-                on: {
-                  'click': () => {
-                    vm.$emit('data-view-img', params)
-                  }
-                }},
-              '查看凭证')
+              let comment_state = params.row.comment_state*1
+              if(comment_state == 1){
+                return h('Button', {
+                  style:{
+                    margin:"0"
+                  },
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  on: {
+                    'click': () => {
+                      vm.$emit('data-show-evaluate', params)
+                    }
+                  }},
+                '查看评价')
+              }else{
+                return h('Button', {
+                  style:{
+                    margin:"0"
+                  },
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  on: {
+                    'click': () => {
+                      vm.$emit('data-view-img', params)
+                    }
+                  }},
+                '查看凭证')
+              }
             }, 
           ]
         },
@@ -122,6 +153,8 @@ export default {
       // 
       showApplyImgList:false,
       applyImgList:[],
+      // 
+      evaluateInfo:{},
       // 
       showApplyReturnModal:false,
       showApplyPassModal:false,
@@ -150,6 +183,8 @@ export default {
     },
     // 查看凭证
     handleViewImg(params){
+      this.applyImgList = [];
+      this.evaluateInfo= {};
       let voucher = [];
       if(!!params.row.shop_image){
         voucher.push(params.row.shop_image)
@@ -160,9 +195,19 @@ export default {
       if(!!params.row.order_image){
         voucher.push(params.row.order_image)
       }
-      this.applyImgList = [];
       this.applyImgList = voucher;
-      this.showApplyImgList = true;
+      let order_sn = params.row.order_sn
+      searchByOrdersn({order_sn:order_sn}).then(res => {
+        const dbody = res.data
+        if (dbody.code != 0) {
+          this.$Notice.warning({
+            title: dbody.msg
+          })
+          return
+        }
+        this.evaluateInfo = dbody.data.order
+        this.showApplyImgList = true;
+      })
     },
     init(data){
       data.openid = !!this.sreach.openid ? this.sreach.openid.trim() : '';

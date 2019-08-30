@@ -38,6 +38,18 @@ export const getSpreadUserOrderList = (data) => {
   })
 }
 
+
+export const searchByOrdersn = (data) => {
+  return axios.request({
+    url: 'shop/UserOrder/searchOrder',
+    data,
+    method: 'post'
+  })
+}
+
+
+
+
 // 获取商余额
 /*
   推广商户
